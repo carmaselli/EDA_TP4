@@ -5,6 +5,8 @@
 #include<string>
 
 
+
+
 typedef struct
 {
 	int eventType;

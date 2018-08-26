@@ -120,6 +120,7 @@
     <ClInclude Include="JSONobject.h" />
     <ClInclude Include="memberParseFsm.h" />
     <ClInclude Include="objectParseFsm.h" />
+    <ClInclude Include="objFSMactroutines.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JSONerror.cpp" />
