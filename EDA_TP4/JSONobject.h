@@ -24,8 +24,10 @@ typedef struct
 class JSONObject
 {
 
-	JSONmember* JSONdata;
+	
 public:
+
+	JSONmember* JSONdata;
 	
 	/* Constructores de JSONObject */
 	/* El constructor por defecto inicializa un JSONObject vacío

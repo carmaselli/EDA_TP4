@@ -34,6 +34,7 @@ event_t objectParseFSM::generateEvent(char * JSONstring)
 	return event_t();
 }
 
-void objectParseFSM::setError(int errorType, const char * errorString)
+void objectParseFSM::setError_(int errorType, const char * errorString)
 {
 }
+
