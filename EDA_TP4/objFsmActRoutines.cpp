@@ -13,6 +13,12 @@ void createNewMember(void * objectParseFSM_)
 
 void saveMemberData(void * objectParseFSM_)
 {
+	objectParseFSM *p2class = (objectParseFSM *)objectParseFSM_;
+	switch (p2class->getCurrentEvent().eventChar)
+	{
+		case
+	}
+
 }
 
 void checkMode(void * objectParseFSM_)
