@@ -19,9 +19,21 @@ string objectParseFSM::getObjName()
 	return string();
 }
 
-JSONmember * objectParseFSM::getMemberArray()
+stateType objectParseFSM::getCurrentState()
+{
+	return stateType();
+}
+
+JSONmember * objectParseFSM::getMembers()
 {
 	return nullptr;
+}
+
+
+
+unsigned int objectParseFSM::getMemberCount()
+{
+	return 0;
 }
 
 

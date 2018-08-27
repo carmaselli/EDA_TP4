@@ -115,12 +115,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="fsmCommon.h" />
     <ClInclude Include="JSONerrorh.h" />
     <ClInclude Include="JSONobject.h" />
-    <ClInclude Include="memberParseFsm.h" />
     <ClInclude Include="objectParseFsm.h" />
-    <ClInclude Include="objFSMactroutines.h" />
+    <ClInclude Include="objFsmActRoutines.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JSONerror.cpp" />

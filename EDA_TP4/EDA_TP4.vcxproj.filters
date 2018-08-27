@@ -21,16 +21,10 @@
     <ClInclude Include="JSONerrorh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="memberParseFsm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="objectParseFsm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fsmCommon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="objFSMactroutines.h">
+    <ClInclude Include="objFsmActRoutines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
