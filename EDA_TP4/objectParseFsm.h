@@ -7,6 +7,8 @@
 #include"JSONobject.h"
 #include "objFsmActRoutines.h"
 
+
+
 typedef struct
 {
 	int eventType;
@@ -18,8 +20,6 @@ typedef struct
 	int errorType;
 	std::string errorString;
 }error_t;
-
-
 
 typedef struct
 {
@@ -49,7 +49,7 @@ public:
 
 	JSONmember* getMembers(); //devuelve el puntero al arreglo de miembros
 	unsigned int getMemberCount();
-	
+	void setError_(int errorType, const char* errorString);//para facilitar el seteo del error dentro de la fsm
 
 
 private:
@@ -68,7 +68,7 @@ private:
 	
 	void fsmStep(event_t ev);//realiza un paso de la fsm
 	event_t generateEvent(char* JSONstring);//genera a partir de los strings recibidos los eventos para la fsm
-	void setError_(int errorType, const char* errorString);//para facilitar el seteo del error dentro de la fsm
+	
 
 	
 

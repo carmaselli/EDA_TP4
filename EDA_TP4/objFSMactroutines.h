@@ -1,8 +1,10 @@
 #ifndef OBJFSMACTROUTINES_H
 #define OBJFSMACTROUTINES_H
 
+
+
+
 /*rutinas de accion*/
-	 //ver que mandar en el puntero ahora que no necesitan nada
 void setError(void* objectParseFSM_);
 void createNewMember(void *objectParseFSM_);
 void saveMemberData(void* objectParseFSM_);

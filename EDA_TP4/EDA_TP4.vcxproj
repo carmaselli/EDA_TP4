@@ -124,6 +124,7 @@
     <ClCompile Include="JSONerror.cpp" />
     <ClCompile Include="JSONobject.cpp" />
     <ClCompile Include="objectParseFsm.cpp" />
+    <ClCompile Include="objFsmActRoutines.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
