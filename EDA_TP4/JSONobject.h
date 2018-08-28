@@ -23,7 +23,8 @@ typedef struct
 
 class JSONObject
 {
-
+	unsigned int fieldCount;
+	int memberCount;
 	
 public:
 	JSONmember * JSONdata;
@@ -50,6 +51,7 @@ public:
 	/* Devuelve en su nombre la cantidad de campos que contiene el
 	* JSONObject */
 	unsigned int getFieldCount(void);
+	unsigned int getFieldCount(const char *f);
 
 	/* Devuelve en su nombre el tipo de campo de f. Los posibles tipos son
 	* (todos en minúscula):
@@ -64,7 +66,7 @@ public:
 	const char * getFieldType(const char * f);
 	int findMember(const char *f);
 	void str_to_lwr(char * str);
-	int str_case_cmp(char * str1, char * str2)
+	int str_case_cmp(char * str1, char * str2);
 
 	void * copyToHeap(char * value);
 

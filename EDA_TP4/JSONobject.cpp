@@ -1,6 +1,6 @@
 #include "JSONobject.h"
 
-JSONObject :: getFieldType(const char * f)
+const char *JSONObject :: getFieldType(const char * f)
 {
 	int i = findMember(f);
 	if (i == -1)
@@ -12,7 +12,7 @@ JSONObject :: getFieldType(const char * f)
 		return JSONdata[i].type;
 	}
 	}
-JSONObject :: getArrayType(const char * f)		
+const char * JSONObject :: getArrayType(const char * f)
 {
 	int i = findMember(f);
 	if (i == -1)
@@ -42,12 +42,12 @@ JSONObject :: getArrayType(const char * f)
 		return "number";
 	}
 }
-JSONObject :: getFieldCount(void)
+unsigned int JSONObject :: getFieldCount(void)
 {
 	return memberCount;
 }
 
-JSONObject:: getFieldSize(const char *f)
+unsigned int JSONObject:: getFieldSize(const char *f)
 {
 	unsigned int result = 0;
 	const char * temp = f;
@@ -76,11 +76,11 @@ JSONObject:: getFieldSize(const char *f)
 	return result;
 }
 
-JSONObject :: getFieldCount(const char *f)
+unsigned int JSONObject :: getFieldCount(const char *f)
 {
 	return fieldCount;
 }
-JSONObject :: print(void)
+void JSONObject :: print(void)
 {
 	printf("FIELD : TYPE\n---------------\n");
 	for (int i = 0; i <= memberCount; i++)
@@ -89,7 +89,7 @@ JSONObject :: print(void)
 	}
 	printf("End of JSON object.\n");
 }
-JSONObject :: isFieldPresent(const char * f)
+bool JSONObject :: isFieldPresent(const char * f)
 {
 	int i = findMember(f);
 	if (i >= 0)
@@ -101,14 +101,14 @@ JSONObject :: isFieldPresent(const char * f)
 		return false;
 	}
 }
-JSONObject :: isEmpty(void)
+bool JSONObject :: isEmpty(void)
 {
 	if (!getFieldCount())
 	{
 		//pregutar que se hace si pasa que no hay nombre pero si value.
 	}
 }
-JSONObject :: copyField(const char * f)
+void * JSONObject :: copyField(const char * f)
 {
 	int i = findMember(f);
 	char * value = JSONdata[i].value;
@@ -121,7 +121,7 @@ JSONObject :: copyField(const char * f)
 		return NULL;
 	}
 }
-JSONObject::copyToHeap(char * value)
+void * JSONObject::copyToHeap(char * value)
 {
 	char * temp = value;
 	int cant = 0;
@@ -140,9 +140,9 @@ JSONObject::copyToHeap(char * value)
 		value++;
 	}
 	copy = temp;
-	return (*void)copy;
+	return (*void)copy;		//WTF SIGNIFICA ESTO BUTE
 }
-JSONObject::str_case_cmp(char * str1, char * str2)
+int JSONObject::str_case_cmp(char * str1, char * str2)
 {
 	char auxStr1[100];
 	char auxStr2[100];
@@ -152,7 +152,7 @@ JSONObject::str_case_cmp(char * str1, char * str2)
 	str_to_lwr(auxStr2);
 		return strcmp(auxStr1, auxStr2);
 }
-JSONObject::str_to_lwr(char * str)
+void JSONObject::str_to_lwr(char * str)
 {
 	int i = 0;
 	while (*(str + i) != '\0')
@@ -164,12 +164,12 @@ JSONObject::str_to_lwr(char * str)
 		i++;
 	}
 }
-JSONObject::findMember(const char *f)
+int JSONObject::findMember(const char *f)
 {
 	int aux = 0, aux2 = -1;
 	for (int i = 0; i <= memberCount && aux != 1; i++)
 	{
-		if (str_case_cmp(JSONdata[i].name, f))
+		if (str_case_cmp(JSONdata[i].name, f))			//ALGO MAL ACA
 		{
 			aux = 1;
 			aux2 = i;
