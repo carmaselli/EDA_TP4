@@ -2,7 +2,7 @@
 #define JSONERROR_H
 
 #include <string>
-#include "objectParseFsm.h"
+//#include "objectParseFsm.h"
 
 
 using namespace std;
