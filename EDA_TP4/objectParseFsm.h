@@ -22,7 +22,9 @@
 #define INVALID_OPENER_STR "El objeto no empieza con un caracter valido"
 #define NO_NAME_STR "Se recibio un objeto sin nombre entre las comillas"
 #define BAD_FORMAT_STR "El formato del objeto recibido es incorrecto, verificar simbolos"
-typedef enum {NO_ERROR,NO_MEMORY,BRACES_AFTER_COMMA, INVALID_OPENER,NO_NAME,BAD_FORMAT}errorType;
+#define UNKNOWN_EVENT_STR "Se recibio un caracter inesperado, el formato del objeto es incorrecto"
+#define POINTER_NOT_SET_STR "No se ha seteado correctamente el puntero a la clase"
+typedef enum {NO_ERROR,NO_MEMORY,BRACES_AFTER_COMMA, INVALID_OPENER,NO_NAME,BAD_FORMAT,UNKNOWN_EVENT,POINTER_NOT_SET}errorType;
 
 
 
@@ -72,6 +74,8 @@ public:
 	event_t getCurrentEvent();
 	JSONmember *getTempMember();
 	bool cursorAtEnd(char* cursorPos_);
+	void setItselfPointer(objectParseFSM* itself_);
+	
 
 	JSONmember* getMembers(); //devuelve el puntero al arreglo de miembros
 	unsigned int getMemberCount();
@@ -91,7 +95,12 @@ private:
 	char* endOfStr;
 	char *cursorPos; //posicion del cursor en el string
 	unsigned int memberCount;//lleva la cuenta de la cantidad de campos encontrados
+	objectParseFSM* itself;//puntero a si misma, para las rutinas de accion de la fsm, debe ser seteado por el usuario con setItselfPointer
 	
+	void cleanWhitespace(char* cursor);
+	bool isBool(char*cursor);
+	bool isNull(char*cursor);
+	bool isNumber(char*cursor);
 	char* pointerToEnd(char* JSONstring);//cuenta la cantidad de caracteres hasta la ultima llave
 	
 	void fsmStep(event_t ev);//realiza un paso de la fsm
@@ -111,6 +120,7 @@ private:
 				{{setError, END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END}} 
 	};
 };
+ 
 
 
 #endif
