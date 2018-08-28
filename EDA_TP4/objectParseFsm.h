@@ -70,7 +70,7 @@ public:
 	void setCursorPos(char * newPos);
 	void createNewMember_();
 	event_t getCurrentEvent();
-	JSONmember* getTempMember();
+	JSONmember *getTempMember();
 	bool cursorAtEnd(char* cursorPos_);
 
 	JSONmember* getMembers(); //devuelve el puntero al arreglo de miembros

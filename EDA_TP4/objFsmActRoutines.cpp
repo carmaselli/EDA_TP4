@@ -34,7 +34,7 @@ void saveMemberName(void * objectParseFSM_)
 	char* cursor = p2class->getCursorPos();
 	bool ready = false;
 	int i = 1;
-	while (!p2class -> cursorAtEnd(cursor) && !ready)
+	while (!p2class->cursorAtEnd(&cursor[i]) && !ready)
 	{
 		if (cursor[i] == ASCII_QUOTATION)
 		{
@@ -49,11 +49,17 @@ void saveMemberName(void * objectParseFSM_)
 			}
 			ready = true;
 		}
+		i++;
 	}
 	if (!ready) //si sali del while pouqe llegue al final del string
 	{
 		p2class->setError_(BAD_FORMAT, BAD_FORMAT_STR);
 	}
+	else
+	{
+		p2class->setCursorPos(&cursor[i]); // si sali del while y no hubo ningun error entonces seteo la nueva posicion del cursor
+	}
+	
 
 }
 
@@ -82,6 +88,6 @@ void copyString(char * start, char * end,string& destination)
 {
 	while (start - end)
 	{
-		destination += *start;
+		destination += *start++;
 	}
 }
