@@ -2,22 +2,22 @@
 #define JSONERROR_H
 
 #include <string>
+#include "objectParseFsm.h"
 
 
 using namespace std;
 
 
-
-
 class JSONError
 {
+	error_t myError;
 public:
 
-	JSONError(bool has Failed = false, const char * Desc = NULL);
+	JSONError(errorType has_Failed = NO_ERROR, const char * Desc = NULL);
 
-	string getErorString(void);
+	string getErrorString(void);
 
-	bool hasFailed(void);
+	errorType hasFailed(void);
 }
 
 #endif // !1
