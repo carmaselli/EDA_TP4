@@ -15,9 +15,9 @@ using namespace std;
 
 typedef struct
 {
-	char * name;
-	char * type;
-	char * value;
+	string name;
+	string type;
+	string value;
 
 }JSONmember;
 
