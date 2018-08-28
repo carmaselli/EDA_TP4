@@ -9,7 +9,7 @@ const char *JSONObject :: getFieldType(const char * f)
 	}
 	else
 	{
-		return JSONdata[i].type;
+		return (JSONdata[i].type).c_str();
 	}
 	}
 const char * JSONObject :: getArrayType(const char * f)
@@ -19,7 +19,8 @@ const char * JSONObject :: getArrayType(const char * f)
 	{
 		return "invalid";
 	}
-	char *value = JSONdata[i].value;
+	const char *value;
+	value = (JSONdata[i].value).c_str();
 	value++;
 	if (*value == '[')
 	{
@@ -56,7 +57,7 @@ unsigned int JSONObject:: getFieldSize(const char *f)
 	{
 		return 0;
 	}
-	char * letter = JSONdata[i].value;
+	const char * letter = (JSONdata[i].value).c_str();
 	while (*letter != '}')
 	{
 		while (*letter != ':')
@@ -85,7 +86,7 @@ void JSONObject :: print(void)
 	printf("FIELD : TYPE\n---------------\n");
 	for (int i = 0; i <= memberCount; i++)
 	{
-		printf("%s : %s\n", JSONdata[i].name, JSONdata[i].type);
+		std::cout << JSONdata[i].name << ": " << JSONdata[i].type << endl;
 	}
 	printf("End of JSON object.\n");
 }
@@ -111,7 +112,7 @@ bool JSONObject :: isEmpty(void)
 void * JSONObject :: copyField(const char * f)
 {
 	int i = findMember(f);
-	char * value = JSONdata[i].value;
+	char * value = (char *) (JSONdata[i].value).c_str();
 	if (i >= 0)
 	{
 		return copyToHeap(value);
@@ -148,9 +149,8 @@ int JSONObject::str_case_cmp(char * str1, char * str2)
 	char auxStr2[100];
 	strcpy_s(auxStr1, 100, str1);
 	str_to_lwr(auxStr1);
-	strcpy_s(auxStr2, 100, str2);	// Uso strcpy_s porque usando strcpy Visual me hacia saltar un error.
-	str_to_lwr(auxStr2);
-		return strcmp(auxStr1, auxStr2);
+	strcpy_s(auxStr2, 100, str2);	
+	return strcmp(auxStr1, auxStr2);
 }
 void JSONObject::str_to_lwr(char * str)
 {
@@ -167,9 +167,10 @@ void JSONObject::str_to_lwr(char * str)
 int JSONObject::findMember(const char *f)
 {
 	int aux = 0, aux2 = -1;
+	string str(f);
 	for (int i = 0; i <= memberCount && aux != 1; i++)
 	{
-		if (str_case_cmp(JSONdata[i].name,(char*) f))			//ALGO MAL ACA
+		if (!str.compare(JSONdata[i].name))			
 		{
 			aux = 1;
 			aux2 = i;

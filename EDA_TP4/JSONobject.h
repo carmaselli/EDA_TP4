@@ -9,7 +9,7 @@
 #include <string>
 #include "JSONerrorh.h"
 
-enum {OBJECT,ARRAY,STRING,NUMBER,BOOL,INVALID};
+enum {OBJECT,ARRAY,STRING,NUMBER,INVALID};
 
 using namespace std;
 
