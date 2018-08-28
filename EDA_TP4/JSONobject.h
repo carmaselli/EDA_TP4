@@ -62,6 +62,11 @@ public:
 	* caso genera un error que almacena internamente
 	*/
 	const char * getFieldType(const char * f);
+	int findMember(const char *f);
+	void str_to_lwr(char * str);
+	int str_case_cmp(char * str1, char * str2)
+
+	void * copyToHeap(char * value);
 
 	/* Devuelve en su nombre el tipo de elemento del array f (f es un campo
 	* dentro del JSONObject de tipo array).
