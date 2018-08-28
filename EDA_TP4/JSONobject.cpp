@@ -131,7 +131,7 @@ void * JSONObject::copyToHeap(char * value)
 		value++;
 	}
 	value = temp;
-	char * copy = malloc(cant * sizeof(char));
+	char * copy = (char*) malloc(cant * sizeof(char));
 	temp = copy;
 	for (; cant != 0; cant--)
 	{
@@ -140,7 +140,7 @@ void * JSONObject::copyToHeap(char * value)
 		value++;
 	}
 	copy = temp;
-	return (*void)copy;		//WTF SIGNIFICA ESTO BUTE
+	return copy;		//WTF SIGNIFICA ESTO BUTE
 }
 int JSONObject::str_case_cmp(char * str1, char * str2)
 {
@@ -169,7 +169,7 @@ int JSONObject::findMember(const char *f)
 	int aux = 0, aux2 = -1;
 	for (int i = 0; i <= memberCount && aux != 1; i++)
 	{
-		if (str_case_cmp(JSONdata[i].name, f))			//ALGO MAL ACA
+		if (str_case_cmp(JSONdata[i].name,(char*) f))			//ALGO MAL ACA
 		{
 			aux = 1;
 			aux2 = i;

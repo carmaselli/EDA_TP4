@@ -11,7 +11,6 @@ void createNewMember(void *objectParseFSM_);
 void doNothing(void* objectParseFSM_);
 void areBracesValid(void* objectParseFSM_);
 void saveMemberName(void* objectParseFSM_);
-void endFsm(void* objectParseFSM_);
 void saveArrayObj(void* objectParseFSM_);
 void saveObjectData(void* objectParseFSM_);
 void saveStringData(void* objectParseFSM_);

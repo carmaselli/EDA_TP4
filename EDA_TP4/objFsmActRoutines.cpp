@@ -57,9 +57,6 @@ void saveMemberName(void * objectParseFSM_)
 
 }
 
-void endFsm(void * objectParseFSM_)
-{
-}
 
 void saveArrayObj(void * objectParseFSM_)
 {

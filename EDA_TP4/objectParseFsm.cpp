@@ -166,7 +166,7 @@ void objectParseFSM::fsmStep(event_t ev)
 event_t objectParseFSM::generateEvent(char * JSONstring)
 {
 
-	//FALTA!!!!!
+	
 	return event_t();
 }
 
