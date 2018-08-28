@@ -4,6 +4,7 @@
 void setError(void * objectParseFSM_)
 {
 	//en funcion del current state y el evento recibido escribir cual fue el error
+	//FALTA!
 }
 
 void createNewMember(void * objectParseFSM_)
@@ -66,22 +67,27 @@ void saveMemberName(void * objectParseFSM_)
 
 void saveArrayObj(void * objectParseFSM_)
 {
+	//FALTA!
 }
 
 void saveObjectData(void * objectParseFSM_)
 {
+	//FALTA!!
 }
 
 void saveStringData(void * objectParseFSM_)
 {
+	//FALTA!!
 }
 
 void saveArrayData(void * objectParseFSM_)
 {
+	//FALTA!!
 }
 
 void saveOthersData(void * objectParseFSM_)
 {
+	//FALTA!!
 }
 
 void copyString(char * start, char * end,string& destination)
