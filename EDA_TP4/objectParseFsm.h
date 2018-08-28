@@ -7,11 +7,22 @@
 #include"JSONobject.h"
 #include "objFsmActRoutines.h"
 
+#define ASCII_OPENING_BRACKETS '{'
+#define ASCII_CLOSING_BRACKETS '}'
+#define ASCII_QUOTATION '\"'
+#define ASCII_COLON ':'
+#define ASCII_COMMA ','
+#define ASCII_OPENING_SQ_BRACKETS '['
+#define ASCII_CLOSING_SQ_BRACKETS ']'
+#define ASCII_NEW_LINE '\n'
 
 #define NO_MEMBERS 0
 #define NO_MEM_STR "No hay memoria disponible para crear mas campos"
-
-typedef enum {NO_ERROR,NO_MEMORY}errorType;
+#define BRACES_AF_COMMA_STR "se esperaba '\"' y se recibio '}'"
+#define INVALID_OPENER_STR "El objeto no empieza con un caracter valido"
+#define NO_NAME_STR "Se recibio un objeto sin nombre entre las comillas"
+#define BAD_FORMAT_STR "El formato del objeto recibido es incorrecto, verificar simbolos"
+typedef enum {NO_ERROR,NO_MEMORY,BRACES_AFTER_COMMA, INVALID_OPENER,NO_NAME,BAD_FORMAT}errorType;
 
 
 
@@ -19,8 +30,8 @@ typedef enum { WAITING_FOR_OBJ_OPENER, WAITING_FOR_QUOTE_ORBRACE, WAITING_FOR_ME
 #define STATE_COUNT 5
 
 
-typedef enum { OPENING_BRACKETS, CLOSING_BRACKETS, QUOTATION, COLON, OPENING_SQ_BRACKETS, CLOSING_SQ_BRACKETS, COMMA, NULL_, BOOL, NUMBER, END_OF_FILE } eventType;
-#define EVENT_COUNT 11
+typedef enum { OPENING_BRACKETS, CLOSING_BRACKETS, QUOTATION, COLON, OPENING_SQ_BRACKETS, CLOSING_SQ_BRACKETS, COMMA, NULL_, BOOL, NUMBER,} eventType;
+#define EVENT_COUNT 10
 
 
 typedef enum { IN_STRING, IN_INNER_OBJ, IN_ARRAY, OUTSIDE }readingPlace;
@@ -55,14 +66,18 @@ public:
 	error_t getError();  //devuelve una estructura error con el tipo de error ocurrido, NO_ERROR en caso de no haber error
 	stateType getCurrentState();
 	bool fsmHasFinished();
+	char* getCursorPos();
 	void setCursorPos(char * newPos);
-	void createNewMember_(JSONmember newMember);
+	void createNewMember_();
 	event_t getCurrentEvent();
+	JSONmember* getTempMember();
+	bool cursorAtEnd(char* cursorPos_);
 
 	JSONmember* getMembers(); //devuelve el puntero al arreglo de miembros
 	unsigned int getMemberCount();
 	void setError_(errorType errorType_, const char* errorString);//para facilitar el seteo del error dentro de la fsm
 	void freeFsmMemory();
+
 
 private:
 	JSONmember* toSave; //arreglo que se crea dinamicamente con todos los miembros del objeto encontrados, se envia luego al programa principal
@@ -73,11 +88,11 @@ private:
 	stateType currentState;
 	char* JSONstringcopy;
 	bool FSMdone;
-	
+	char* endOfStr;
 	char *cursorPos; //posicion del cursor en el string
 	unsigned int memberCount;//lleva la cuenta de la cantidad de campos encontrados
 	
-
+	char* pointerToEnd(char* JSONstring);//cuenta la cantidad de caracteres hasta la ultima llave
 	
 	void fsmStep(event_t ev);//realiza un paso de la fsm
 	event_t generateEvent(char* JSONstring);//genera a partir de los strings recibidos los eventos para la fsm
@@ -88,12 +103,12 @@ private:
 
 	/*TABLA DE ESTADOS DE LA FSM*/
 	cell_t FsmTable[STATE_COUNT][EVENT_COUNT] = 
-	{
-	{{doNothing,WAITING_FOR_QUOTE_ORBRACE},{setError,END},{setError,END},{setError,END},{saveArrayObj,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END}},\
-	{{setError,END},{areBracesValid,END},{saveMemberName,WAITING_FOR_MEMBER}, {setError,END}, {setError,END}, {setError,END}, {setError,END}, {setError,END}, {setError,END}, {setError,END}, {setError,END}} ,\
-	{{saveMemberData, WAITING_FOR_OBJ_CLOSER_ORNEXT},{setError,END},{saveMemberData,WAITING_FOR_OBJ_CLOSER_ORNEXT},{setError,END},{saveMemberData,WAITING_FOR_OBJ_CLOSER_ORNEXT},{setError,END},{setError,END},{saveMemberData,WAITING_FOR_OBJ_CLOSER_ORNEXT}, {saveMemberData,WAITING_FOR_OBJ_CLOSER_ORNEXT}, {saveMemberData,WAITING_FOR_OBJ_CLOSER_ORNEXT}, {setError,END}},\
-	{{setError, END},{createNewMember,END},{setError,END},{setError,END},{setError,END},{setError,END},{createNewMember,WAITING_FOR_QUOTE_ORBRACE},{setError,END},{setError,END},{setError,END},{setError,END}},\
-	{{setError, END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{endFsm,END}} \
+	{//     {     ,     }     ,     "    ,      :    ,    [    ,     ]    ,     NULL ,     BOOL   ,    NUMBER    
+				{{doNothing,WAITING_FOR_QUOTE_ORBRACE},{setError,END},{setError,END},{setError,END},{saveArrayObj,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END}},
+				{{setError,END},{areBracesValid,END},{saveMemberName,WAITING_FOR_MEMBER}, {setError,END}, {setError,END}, {setError,END}, {setError,END}, {setError,END}, {setError,END}, {setError,END}} ,
+	/*states*/	{{saveObjectData, WAITING_FOR_OBJ_CLOSER_ORNEXT},{setError,END},{saveStringData,WAITING_FOR_OBJ_CLOSER_ORNEXT},{setError,END},{saveArrayData,WAITING_FOR_OBJ_CLOSER_ORNEXT},{setError,END},{setError,END},{saveOthersData,WAITING_FOR_OBJ_CLOSER_ORNEXT}, {saveOthersData,WAITING_FOR_OBJ_CLOSER_ORNEXT}, {saveOthersData,WAITING_FOR_OBJ_CLOSER_ORNEXT}},
+				{{setError, END},{createNewMember,END},{setError,END},{setError,END},{setError,END},{setError,END},{createNewMember,WAITING_FOR_QUOTE_ORBRACE},{setError,END},{setError,END},{setError,END}},
+				{{setError, END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END},{setError,END}} 
 	};
 };
 
